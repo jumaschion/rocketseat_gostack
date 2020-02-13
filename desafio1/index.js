@@ -6,11 +6,13 @@ server.use(express.json());
 
 const projects = [];
 
+const getProjectById = id => projects.find(project => project.id === id);
+
 //Local Middleware
 function checkIdAlreadyExists(req, res, next) {
   const { id } = req.params;
 
-  const idProject = projects.find(project => project.id === id);
+  const idProject = getProjectById(id);
 
   if (!idProject) {
     return res.status(400).json({ error: "Project not found" });
@@ -32,7 +34,7 @@ server.use(requestCounter);
 
 //Get all projects
 
-server.get("/projects", (req, res) => {
+server.get(["/projects", "/"], (req, res) => {
   return res.json(projects);
 });
 
@@ -54,8 +56,7 @@ server.post("/projects", (req, res) => {
  */
 server.post("/projects/:id/tasks", checkIdAlreadyExists, (req, res) => {
   const { title } = req.body;
-  const { id } = req.params;
-  const idProject = projects.find(project => project.id == id);
+  const idProject = getProjectById(id);
 
   idProject.tasks.push(title);
 
@@ -69,9 +70,7 @@ server.post("/projects/:id/tasks", checkIdAlreadyExists, (req, res) => {
  */
 server.put("/projects/:id", checkIdAlreadyExists, (req, res) => {
   const { title } = req.body;
-  const { id } = req.params;
-
-  const idProject = projects.find(project => project.id == id);
+  const idProject = getProjectById(id);
 
   idProject.title = title;
 
