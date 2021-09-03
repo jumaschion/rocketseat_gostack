@@ -8,7 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
-    "immer": "^8.0.1",
+    "immer": "^9.0.6",
     "polished": "^3.5.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
